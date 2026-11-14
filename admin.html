@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>AURA 101 TECH WORLD | Admin Control Center & Owner Portal</title>
+  
+  <meta name="description" content="AURA 101 TECH WORLD - Store Owner & Executive Administration Portal. Manage inventory, pricing, WhatsApp customer orders, and store settings." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* Admin Standalone Application Layout & Custom Styling */
+    body {
+      background-color: #040814;
+      color: #f1f5f9;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Full-Page Login Screen */
+    .admin-login-screen {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      background: radial-gradient(circle at 50% 15%, #0e2049 0%, #060b17 65%, #02050c 100%);
+      position: relative;
+    }
+
+    .admin-login-card {
+      background: rgba(13, 22, 42, 0.94);
+      border: 1.5px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 38px 32px;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 40px rgba(0, 212, 255, 0.1);
+      backdrop-filter: blur(16px);
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .admin-login-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .admin-login-logo {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 212, 255, 0.25));
+    }
+
+    .admin-login-tagline {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--cyber-cyan);
+      font-weight: 700;
+      background: rgba(0, 212, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 100px;
+      border: 1px solid rgba(0, 212, 255, 0.25);
+    }
+
+    .admin-login-title {
+      font-size: 23px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 0 0 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .admin-login-desc {
+      font-size: 13.5px;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin: 0 0 26px;
+    }
+
+    .admin-input-wrap {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .admin-input-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-password-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .admin-password-input {
+      width: 100%;
+      background: #080f22;
+      border: 1.5px solid #1e293b;
+      border-radius: 10px;
+      padding: 13px 44px 13px 16px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .admin-password-input:focus {
+      border-color: var(--cyber-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+    }
+
+    .admin-eye-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+    }
+
+    .admin-eye-btn:hover {
+      color: #ffffff;
+    }
+
+    .admin-login-error {
+      min-height: 20px;
+      margin-top: 8px;
+      font-size: 12.5px;
+      color: #f87171;
+      font-weight: 600;
+    }
+
+    .admin-submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #00d4ff 0%, #0077ff 100%);
+      color: #050b18;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.35);
+      transition: all 0.25s ease;
+      margin-top: 6px;
+    }
+
+    .admin-submit-btn:hover {
+      transform: translateY(-1.5px);
+      box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+    }
+
+    .admin-footer-links {
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .admin-return-store-link {
+      color: #38bdf8;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s ease;
+    }
+
+    .admin-return-store-link:hover {
+      color: #7dd3fc;
+      text-decoration: underline;
+    }
+
+    .admin-security-pill {
+      font-size: 11.5px;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Standalone Dashboard View */
+    .admin-dashboard-app {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #060b17;
+    }
+
+    /* Topbar */
+    .admin-topbar {
+      background: #080f21;
+      border-bottom: 1px solid #1e293b;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .admin-brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .admin-brand-headings {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .admin-brand-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-badge-portal {
+      font-size: 10.5px;
+      background: rgba(0, 212, 255, 0.15);
+      color: var(--cyber-cyan);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-status-indicator {
+      font-size: 12.5px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-dot-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .admin-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-topbar-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .admin-topbar-btn.storefront-link {
+      background: rgba(0, 212, 255, 0.12);
+      border-color: rgba(0, 212, 255, 0.3);
+      color: var(--cyber-cyan);
+    }
+
+    .admin-topbar-btn.storefront-link:hover {
+      background: rgba(0, 212, 255, 0.22);
+      border-color: var(--cyber-cyan);
+      transform: translateY(-1px);
+    }
+
+    .admin-topbar-btn.secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border-color: #334155;
+    }
+
+    .admin-topbar-btn.secondary:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .admin-topbar-btn.logout {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.28);
+    }
+
+    .admin-topbar-btn.logout:hover {
+      background: rgba(239, 68, 68, 0.24);
+      color: #ffffff;
+    }
+
+    .btn-mobile-only {
+      display: none;
+    }
+
+    .btn-desktop-only {
+      display: inline;
+    }
+
+    .admin-mobile-badge {
+      display: none;
+    }
+
+    .admin-mobile-strip {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .btn-desktop-only {
+        display: none !important;
+      }
+      .btn-mobile-only {
+        display: inline !important;
+      }
+      /* Top header action buttons: icon-only on mobile to avoid crowding */
+      .admin-topbar-actions .btn-mobile-only {
+        display: none !important;
+      }
+    }
+
+    /* Tabs Bar */
+    .admin-tabs-bar {
+      background: #091226;
+      border-bottom: 1px solid #1e293b;
+      padding: 0 24px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      position: sticky;
+      top: 71px;
+      z-index: 90;
+    }
+
+    .admin-tabs-scroll {
+      display: flex;
+      gap: 6px;
+      min-width: max-content;
+    }
+
+    .admin-tab-btn {
+      padding: 13px 20px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #94a3b8;
+      border: none;
+      background: none;
+      border-bottom: 2.5px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .admin-tab-btn:hover {
+      color: #ffffff;
+    }
+
+    .admin-tab-btn.active {
+      color: var(--cyber-cyan);
+      border-bottom-color: var(--cyber-cyan);
+    }
+
+    /* Main Content */
+    .admin-content-area {
+      flex: 1;
+      padding: 28px 24px 60px;
+      background: radial-gradient(circle at 50% 0%, #0d1a38 0%, #060b17 60%);
+    }
+
+    .admin-tab-pane {
+      display: none;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .admin-tab-pane.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Toast */
+    .admin-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--cyber-cyan);
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.28s ease;
+      z-index: 99999;
+    }
+
+    .admin-toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       MOBILE APP-STYLE RESPONSIVE DASHBOARD LAYOUT (iPhone X & Mobile)
+       ========================================================================== */
+    @media (max-width: 860px) {
+      html, body {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* Compact, Single-Row Sticky App Header (54px) */
+      .admin-topbar {
+        padding: 8px 12px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: 54px;
+        background: #080f21;
+        border-bottom: 1px solid #1e293b;
+        gap: 8px;
+        box-sizing: border-box;
+      }
+
+      .admin-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .admin-brand-logo {
+        height: 30px;
+        width: auto;
+        display: block;
+      }
+
+      /* CRITICAL FIX: Hide the duplicate text on mobile completely to stop overlapping with action buttons! */
+      .admin-brand-headings {
+        display: none !important;
+      }
+
+      .admin-mobile-badge {
+        display: inline-flex !important;
+        background: rgba(0, 212, 255, 0.15);
+        border: 1px solid rgba(0, 212, 255, 0.35);
+        color: var(--cyber-cyan);
+        font-size: 10.5px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 6px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      /* Sleek single-row action buttons */
+      .admin-topbar-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .admin-topbar-btn {
+        height: 32px;
+        padding: 0 10px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        white-space: nowrap;
+      }
+
+      /* Mobile Connection Status Strip below header */
+      .admin-mobile-strip {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: #060c1c;
+        border-bottom: 1px solid #162444;
+        padding: 5px 12px;
+        font-size: 11px;
+        color: #94a3b8;
+        font-weight: 500;
+        position: sticky;
+        top: 54px;
+        z-index: 96;
+      }
+
+      .admin-mobile-strip strong {
+        color: #4ade80;
+      }
+
+      /* Dedicated Sticky Mobile Tab Bar right below status strip */
+      .admin-tabs-bar {
+        position: sticky;
+        top: 80px; /* 54px header + 26px status strip */
+        z-index: 95;
+        background: #091226;
+        padding: 8px 10px;
+        border-bottom: 1px solid #1e293b;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .admin-tabs-bar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .admin-tabs-scroll {
+        display: flex;
+        gap: 8px;
+        min-width: max-content;
+      }
+
+      .admin-tab-btn {
+        padding: 8px 14px;
+        font-size: 12.5px;
+        font-weight: 600;
+        border-radius: 10px;
+        background: #0f1c34;
+        border: 1px solid #1e3358;
+        color: #94a3b8;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+      }
+
+      .admin-tab-btn.active {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(0, 114, 255, 0.25));
+        border-color: #38bdf8;
+        color: #ffffff;
+        font-weight: 700;
+        box-shadow: 0 2px 12px rgba(0, 212, 255, 0.35);
+      }
+
+      .admin-content-area {
+        padding: 12px 10px 50px;
+      }
+
+      /* Compact 2x2 Metric Cards Grid on Mobile */
+      .owner-metrics-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .owner-metric-card {
+        padding: 10px;
+        gap: 8px;
+        border-radius: 10px;
+      }
+
+      .metric-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+
+      .metric-label {
+        font-size: 9.5px;
+      }
+
+      .metric-value {
+        font-size: 15px;
+      }
+
+      .metric-sub {
+        display: none; /* Hide extra line to keep cards uniformly compact */
+      }
+
+      .owner-box {
+        padding: 14px 12px;
+        border-radius: 12px;
+      }
+
+      .owner-box-header {
+        margin-bottom: 12px;
+      }
+
+      .owner-box-title {
+        font-size: 14px;
+      }
+
+      /* Full width inquiry card layout - Prevents narrow word wrapping */
+      .owner-recent-item {
+        padding: 10px 12px;
+        gap: 6px;
+      }
+
+      .recent-top-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .recent-item-name {
+        font-size: 13.5px;
+        line-height: 1.35;
+      }
+
+      .recent-item-sub {
+        font-size: 11px;
+      }
+
+      .recent-item-price {
+        font-size: 13.5px;
+      }
+
+      /* Stop iOS Safari Auto-Zoom: 16px font-size on all mobile inputs */
+      .owner-input,
+      .owner-select,
+      .owner-textarea,
+      .admin-password-input {
+        font-size: 16px !important;
+      }
+
+      .owner-manage-toolbar {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .owner-manage-toolbar .owner-input,
+      .owner-manage-toolbar .owner-select {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       VIEW 1: OWNER & ADMIN LOGIN SCREEN (Default when locked)
+       ========================================================================== -->
+  <main class="admin-login-screen" id="adminLoginView">
+    <div class="admin-login-card">
+      <div class="admin-login-brand">
+        <img src="assets/images/logo-new.png" alt="AURA 101 TECH WORLD" class="admin-login-logo" />
+        <span class="admin-login-tagline">Executive Management Portal</span>
+      </div>
+
+      <h1 class="admin-login-title">AURA 101 Admin Access</h1>
+      <p class="admin-login-desc">
+        Authorized store management only. Enter your owner security password to manage catalog, pricing, and live customer orders.
+      </p>
+
+      <form id="adminLoginForm" autocomplete="off">
+        <div class="admin-input-wrap">
+          <label for="adminPasswordInput" class="admin-input-label">Master Password</label>
+          <div class="admin-password-box">
+            <input 
+              type="password" 
+              id="adminPasswordInput" 
+              class="admin-password-input" 
+              placeholder="Enter master password..." 
+              required 
+              autocomplete="current-password"
+            />
+            <button type="button" class="admin-eye-btn" id="toggleAdminPasswordBtn" title="Toggle password visibility">
+              👁️
+            </button>
+          </div>
+          <div class="admin-login-error" id="adminLoginError"></div>
+        </div>
+
+        <button type="submit" class="admin-submit-btn" id="adminLoginSubmitBtn">
+          <span>Unlock Admin Dashboard</span>
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </form>
+
+      <div class="admin-footer-links">
+        <a href="index.html" class="admin-return-store-link">
+          <span>← Return to Customer Storefront</span>
+        </a>
+        <span class="admin-security-pill">
+          🔒 Protected Access • Authorized Owner Only
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       VIEW 2: DEDICATED ADMIN DASHBOARD WEB APPLICATION
+       ========================================================================== -->
+  <div class="admin-dashboard-app" id="adminDashboardView" style="display: none;">
+    
+    <!-- Top Navigation Bar -->
+    <header class="admin-topbar">
+      <div class="admin-brand">
+        <img src="assets/images/logo-new.png" alt="AURA 101 TECH WORLD" class="admin-brand-logo" />
+        <span class="admin-mobile-badge">ADMIN</span>
+        <div class="admin-brand-headings">
+          <div class="admin-brand-title">
+            <span>AURA 101 TECH WORLD</span>
+            <span class="admin-badge-portal">Admin Control Center</span>
+          </div>
+          <div class="admin-status-indicator">
+            <span class="live-dot-pulse"></span>
+            <span>Store Connected • WhatsApp: <strong id="activeWhatsAppPill" style="color: #4ade80;">256759375151</strong></span>
+            <span id="serverStatusBadge" style="margin-left: 10px; font-size: 11px; padding: 2px 9px; border-radius: 100px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 700;">📡 Connecting...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-topbar-actions">
+        <a href="index.html" target="_blank" class="admin-topbar-btn storefront-link" title="Open customer-facing shop in new tab">
+          <span>🌐 <span class="btn-desktop-only">View Live Store</span><span class="btn-mobile-only">Store</span></span>
+        </a>
+        <button class="admin-topbar-btn secondary" id="adminRefreshBtn" title="Refresh & Sync Data">
+          <span>🔄 <span class="btn-desktop-only">Sync Data</span><span class="btn-mobile-only">Sync</span></span>
+        </button>
+        <button class="admin-topbar-btn logout" id="adminLogoutBtn" title="Lock & Logout">
+          <span>🔒 <span class="btn-desktop-only">Logout</span><span class="btn-mobile-only">Exit</span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Live Status Strip (Cleanly displayed on mobile without crowding the header) -->
+    <div class="admin-mobile-strip">
+      <span class="live-dot-pulse"></span>
+      <span>Store Connected • WhatsApp: <strong id="mobileActiveWhatsApp">256759375151</strong></span>
+      <span id="mobileServerStatusBadge" style="margin-left: 6px; font-size: 10px; padding: 2px 7px; border-radius: 100px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8;">📡 Connecting...</span>
+    </div>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="admin-tabs-bar" aria-label="Admin Navigation Tabs">
+      <div class="admin-tabs-scroll">
+        <button class="admin-tab-btn active" data-tab="overview">
+          <span>📊</span>
+          <span><span class="btn-desktop-only">Overview & Stats</span><span class="btn-mobile-only">Overview</span></span>
+        </button>
+        <button class="admin-tab-btn" data-tab="add-item">
+          <span>➕</span>
+          <span><span class="btn-desktop-only">Add New Item</span><span class="btn-mobile-only">Add Item</span></span>
+        </button>
+        <button class="admin-tab-btn" data-tab="manage-items">
+          <span>📦</span>
+          <span><span class="btn-desktop-only">Manage Products</span><span class="btn-mobile-only">Products</span> (<span id="adminTotalProductsCount">0</span>)</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="orders-log">
+          <span>💬</span>
+          <span><span class="btn-desktop-only">WhatsApp Orders Tracked</span><span class="btn-mobile-only">Orders</span> (<span id="adminOrdersCount">0</span>)</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="settings">
+          <span>⚙️</span>
+          <span><span class="btn-desktop-only">Store Config & Security</span><span class="btn-mobile-only">Settings</span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="admin-content-area">
+      
+      <!-- TAB 1: OVERVIEW -->
+      <section class="admin-tab-pane active" id="pane-overview">
+        <!-- Metrics Grid -->
+        <div class="owner-metrics-grid">
+          <div class="owner-metric-card">
+            <div class="metric-icon blue">📦</div>
+            <div class="metric-info">
+              <span class="metric-label">Total Live Products</span>
+              <strong class="metric-value" id="metricTotalProducts">0</strong>
+              <span class="metric-sub">Across 16 Tech Categories</span>
+            </div>
+          </div>
+
+          <div class="owner-metric-card">
+            <div class="metric-icon green">💰</div>
+            <div class="metric-info">
+              <span class="metric-label">Total Catalog Value</span>
+              <strong class="metric-value" id="metricTotalValue">UGX 0</strong>
+              <span class="metric-sub">Combined Inventory Value</span>
+            </div>
+          </div>
+
+          <div class="owner-metric-card">
+            <div class="metric-icon cyan">💬</div>
+            <div class="metric-info">
+              <span class="metric-label">WhatsApp Inquiries Logged</span>
+              <strong class="metric-value" id="metricTotalInquiries">0</strong>
+              <span class="metric-sub">Live customer lead tracker</span>
+            </div>
+          </div>
+
+          <div class="owner-metric-card">
+            <div class="metric-icon purple">🔥</div>
+            <div class="metric-info">
+              <span class="metric-label">Estimated Order Pipeline</span>
+              <strong class="metric-value" id="metricPipelineValue">UGX 0</strong>
+              <span class="metric-sub">Potential WhatsApp Sales</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columns -->
+        <div class="owner-overview-columns">
+          <!-- Recent Inquiries -->
+          <div class="owner-box">
+            <div class="owner-box-header">
+              <h3 class="owner-box-title">⚡ Recent Customer WhatsApp Orders & Inquiries</h3>
+              <button class="owner-btn-text" id="viewAllOrdersBtn">View All →</button>
+            </div>
+            <div class="owner-recent-list" id="adminRecentInquiriesList">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="owner-box">
+            <div class="owner-box-header">
+              <h3 class="owner-box-title">🚀 Quick Admin Actions</h3>
+            </div>
+            <div class="owner-quick-actions">
+              <button class="owner-action-card" id="quickAddProductBtn">
+                <span class="action-icon">➕</span>
+                <span class="action-text"><strong>Add New Product</strong><span>Add phones, TVs, laptops, consoles</span></span>
+              </button>
+              <button class="owner-action-card" id="quickManageCatalogBtn">
+                <span class="action-icon">📦</span>
+                <span class="action-text"><strong>Manage Inventory</strong><span>Edit prices, photos & stock</span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ADD NEW ITEM -->
+      <section class="admin-tab-pane" id="pane-add-item">
+        <div class="owner-add-product-container">
+          
+          <!-- Form Column -->
+          <div class="owner-box owner-form-col">
+            <div class="owner-box-header">
+              <h3 class="owner-box-title">➕ Add New Item to AURA 101</h3>
+              <span class="owner-box-badge">Instantly Publishes to Live Store</span>
+            </div>
+
+            <form id="adminAddProductForm" class="owner-product-form">
+              <!-- Title -->
+              <div class="owner-form-group">
+                <label class="owner-label" for="newProdName">Product Title / Full Name *</label>
+                <input type="text" id="newProdName" class="owner-input" placeholder="e.g. Samsung Galaxy S25 Ultra 512GB" required />
+              </div>
+
+              <!-- Category & Brand -->
+              <div class="owner-form-row">
+                <div class="owner-form-group flex-1">
+                  <label class="owner-label" for="newProdCategory">Category *</label>
+                  <select id="newProdCategory" class="owner-select" required>
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+                <div class="owner-form-group flex-1">
+                  <label class="owner-label" for="newProdBrand">Brand Name *</label>
+                  <input type="text" id="newProdBrand" class="owner-input" placeholder="e.g. Apple, Samsung, Sony, JBL, HP" required />
+                </div>
+              </div>
+
+              <!-- Price & Badge -->
+              <div class="owner-form-row">
+                <div class="owner-form-group flex-1">
+                  <label class="owner-label" for="newProdPrice">Price in UGX *</label>
+                  <input type="number" id="newProdPrice" class="owner-input" placeholder="e.g. 5000000" min="0" step="any" required />
+                </div>
+                <div class="owner-form-group flex-1">
+                  <label class="owner-label" for="newProdBadge">Promotional Badge</label>
+                  <select id="newProdBadge" class="owner-select">
+                    <option value="Hot Deal">Hot Deal 🔥</option>
+                    <option value="Popular Deal">Popular Deal ⚡</option>
+                    <option value="Trending">Trending 🚀</option>
+                    <option value="Best Seller">Best Seller ⭐</option>
+                    <option value="Official Store">Official Store 🛡️</option>
+                    <option value="Special Offer">Special Offer 🎁</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Photo Upload & URL -->
+              <div class="owner-form-group">
+                <label class="owner-label">Product Image *</label>
+                <div class="owner-image-input-wrap">
+                  <label for="newProdFileInput" class="owner-upload-btn" id="newProdUploadLabel">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>📁 Choose Photo from Phone or Computer</span>
+                  </label>
+                  <input type="file" id="newProdFileInput" accept="image/*" style="display: none;" />
+                  
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="owner-upload-or">OR Link / URL:</span>
+                    <input type="text" id="newProdImage" class="owner-input" style="flex: 1;" placeholder="Paste image URL or choose photo above..." required />
+                  </div>
+                </div>
+                
+                <!-- Quick Image Presets -->
+                <div class="owner-preset-images">
+                  <span class="preset-label">Quick Presets:</span>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=450&q=75">📱 iPhone</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=450&q=75">📱 Samsung</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=450&q=75">💻 MacBook</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=450&q=75">🎮 PS5 Console</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=450&q=75">🎧 Headphones</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=450&q=75">📺 4K TV</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=450&q=75">⌚ Watch</button>
+                  <button type="button" class="preset-btn" data-img="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=450&q=75">🔊 Speaker</button>
+                </div>
+              </div>
+
+              <!-- Specs -->
+              <div class="owner-form-group">
+                <label class="owner-label" for="newProdSpecs">Key Specs Summary</label>
+                <input type="text" id="newProdSpecs" class="owner-input" placeholder="e.g. 16GB RAM • 512GB SSD • Snapdragon 8 Elite • Titanium" />
+              </div>
+
+              <!-- Description -->
+              <div class="owner-form-group">
+                <label class="owner-label" for="newProdDesc">Detailed Description</label>
+                <textarea id="newProdDesc" class="owner-textarea" rows="3" placeholder="Describe the item, authentic condition, fast delivery across Kampala and Uganda."></textarea>
+              </div>
+
+              <div class="owner-form-actions">
+                <button type="submit" class="owner-btn-publish" id="submitAddProductBtn">
+                  <span>🚀 Publish Product to Live Store</span>
+                </button>
+                <button type="reset" class="owner-btn-secondary" id="resetAddProductBtn">
+                  <span>Reset Form</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Live Card Preview Column -->
+          <div class="owner-box owner-preview-col">
+            <div class="owner-box-header">
+              <h3 class="owner-box-title">👁️ Live Store Preview</h3>
+              <span class="owner-box-badge live">Real-Time Sync</span>
+            </div>
+            <div class="preview-card-wrap">
+              <div class="product-card" id="previewProductCard">
+                <div class="card-image-wrap">
+                  <span class="card-badge hot" id="prevCardBadge">Hot Deal</span>
+                  <div class="card-img-backdrop" id="prevCardBackdrop" style="background-image: url('https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=450&q=75')"></div>
+                  <img class="card-product-img" id="prevCardImg" src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=450&q=75" alt="Preview Image" />
+                </div>
+                <div class="card-info">
+                  <div class="card-category-tag" id="prevCardCategory">Popular Phones</div>
+                  <h3 class="card-title" id="prevCardTitle">Samsung Galaxy S25 Ultra 512GB</h3>
+                  <div class="card-price-wrap">
+                    <span class="card-price" id="prevCardPrice">UGX 4,500,000</span>
+                  </div>
+                  <div class="card-actions-wrap">
+                    <button class="card-btn-primary" type="button">
+                      <span>Order on WhatsApp</span>
+                    </button>
+                    <button class="card-btn-secondary" type="button">
+                      <span>View details</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 3: MANAGE PRODUCTS -->
+      <section class="admin-tab-pane" id="pane-manage-items">
+        <div class="owner-box">
+          <div class="owner-box-header flex-wrap">
+            <div>
+              <h3 class="owner-box-title">📦 Live Catalog Management</h3>
+              <span class="owner-sub-title">Search, edit prices/photos, or remove items from the live store.</span>
+            </div>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="owner-manage-toolbar">
+            <input type="text" id="adminCatalogSearch" class="owner-input" placeholder="Search by title, brand, or specs..." />
+            <select id="adminCatalogCatFilter" class="owner-select">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+
+          <!-- Products Table -->
+          <div class="owner-table-wrap">
+            <table class="owner-table" id="adminProductsTable">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Price (UGX)</th>
+                  <th>Status</th>
+                  <th>Type</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: WHATSAPP ORDERS LOG -->
+      <section class="admin-tab-pane" id="pane-orders-log">
+        <div class="owner-box">
+          <div class="owner-box-header flex-wrap">
+            <div>
+              <h3 class="owner-box-title">💬 WhatsApp Inquiries & Orders Tracker</h3>
+              <span class="owner-sub-title">Logged automatically when visitors click "Order on WhatsApp" or "Checkout Cart" on the storefront.</span>
+            </div>
+            <div class="owner-manage-actions">
+              <button class="owner-btn-danger" id="clearOrdersLogBtn">
+                🗑️ Clear Log
+              </button>
+            </div>
+          </div>
+
+          <div class="owner-table-wrap">
+            <table class="owner-table" id="adminOrdersTable">
+              <thead>
+                <tr>
+                  <th>Ref ID</th>
+                  <th>Time / Date</th>
+                  <th>Type</th>
+                  <th>Items / Inquiry Details</th>
+                  <th>Value (UGX)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersTableBody">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: STORE CONFIG & SECURITY -->
+      <section class="admin-tab-pane" id="pane-settings">
+        <div class="owner-box" style="max-width: 720px; margin: 0 auto;">
+          <div class="owner-box-header">
+            <h3 class="owner-box-title">⚙️ Store Configuration & WhatsApp Orders</h3>
+          </div>
+
+          <form id="adminSettingsForm" class="owner-product-form">
+            <!-- WhatsApp Number -->
+            <div class="owner-form-group">
+              <label class="owner-label" for="cfgWhatsappNumber">📱 Store WhatsApp Order Number</label>
+              <input type="text" id="cfgWhatsappNumber" class="owner-input" value="256759375151" placeholder="e.g. 256759375151" required />
+              <small class="owner-help-text">Uganda format: start with <strong>256</strong> then your number (e.g. 0759375151 → <strong>256759375151</strong>). All customer checkout and inquiry buttons route here.</small>
+            </div>
+
+            <!-- Delivery Location -->
+            <div class="owner-form-group">
+              <label class="owner-label" for="cfgStoreLocation">📍 Delivery Notice / Store Area</label>
+              <input type="text" id="cfgStoreLocation" class="owner-input" value="Kampala, Uganda • Countrywide Delivery" required />
+            </div>
+
+            <!-- Official Social Handles Display -->
+            <div class="owner-form-group" style="background: rgba(15, 23, 42, 0.45); border: 1px solid #1e293b; border-radius: 10px; padding: 14px; margin-top: 6px;">
+              <label class="owner-label" style="color: var(--cyber-cyan); font-weight: 700;">🌐 Official Social Media Channels (@Aura101TechWorld)</label>
+              <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.8; margin-top: 6px;">
+                <div>📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/Aura101TechWorld" target="_blank" style="color: #38bdf8;">instagram.com/Aura101TechWorld</a></div>
+                <div>✖️ <strong>X (Twitter):</strong> <a href="https://x.com/Aura101TechWorld" target="_blank" style="color: #38bdf8;">x.com/Aura101TechWorld</a></div>
+                <div>🎵 <strong>TikTok:</strong> <a href="https://www.tiktok.com/@Aura101TechWorld" target="_blank" style="color: #38bdf8;">tiktok.com/@Aura101TechWorld</a></div>
+                <div>💬 <strong>WhatsApp:</strong> <a href="https://wa.me/256759375151" target="_blank" style="color: #4ade80;">wa.me/256759375151 (+256 759 375 151)</a></div>
+              </div>
+            </div>
+
+            <!-- Change Password Section -->
+            <div class="owner-form-group" style="border-top: 1px solid #1e293b; padding-top: 20px; margin-top: 8px;">
+              <label class="owner-label">🔐 Change Master Password</label>
+              <div class="owner-form-row" style="gap: 12px; margin-top: 6px;">
+                <div style="flex: 1;">
+                  <label class="owner-label" for="cfgCurrentPassword" style="font-size: 11.5px; color: #64748b;">Current Password</label>
+                  <div style="position: relative;">
+                    <input type="password" id="cfgCurrentPassword" class="owner-input" placeholder="Enter current password" autocomplete="current-password" style="padding-right: 40px;" />
+                    <button type="button" class="cfg-pwd-toggle" data-target="cfgCurrentPassword" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px;">👁️</button>
+                  </div>
+                </div>
+                <div style="flex: 1;">
+                  <label class="owner-label" for="cfgNewPassword" style="font-size: 11.5px; color: #64748b;">New Password</label>
+                  <div style="position: relative;">
+                    <input type="password" id="cfgNewPassword" class="owner-input" placeholder="Enter new password" autocomplete="new-password" style="padding-right: 40px;" />
+                    <button type="button" class="cfg-pwd-toggle" data-target="cfgNewPassword" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px;">👁️</button>
+                  </div>
+                </div>
+                <div style="flex: 1;">
+                  <label class="owner-label" for="cfgConfirmPassword" style="font-size: 11.5px; color: #64748b;">Confirm New Password</label>
+                  <div style="position: relative;">
+                    <input type="password" id="cfgConfirmPassword" class="owner-input" placeholder="Repeat new password" autocomplete="new-password" style="padding-right: 40px;" />
+                    <button type="button" class="cfg-pwd-toggle" data-target="cfgConfirmPassword" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:16px;">👁️</button>
+                  </div>
+                </div>
+              </div>
+              <div id="cfgPwdMsg" style="margin-top: 8px; font-size: 12.5px; min-height: 18px;"></div>
+              <small class="owner-help-text">Leave all 3 password fields blank to keep your current password unchanged.</small>
+            </div>
+
+            <!-- Shared Server & Port Sharing Section -->
+            <div class="owner-form-group" style="border-top: 1px solid #1e293b; padding-top: 20px; margin-top: 16px; background: rgba(56, 189, 248, 0.04); border-radius: 12px; padding: 18px; border: 1px solid rgba(56, 189, 248, 0.18);">
+              <label class="owner-label" style="color: #38bdf8; font-size: 13.5px; font-weight: 800;">🌐 Shared Port & Live Multi-User Sync</label>
+              <p style="font-size: 12.5px; color: #94a3b8; line-height: 1.5; margin: 6px 0 14px;">
+                <strong>Running with <code>npx serve</code> right now?</strong> Click "Download Updated data.js" below and place it into your <code>Phone_web</code> folder to immediately show all your new products to your friend without stopping your server!<br>
+                <strong>Want both of you to add products at the same time?</strong> Run <code>start-server.bat</code> so changes save directly to the central database in real time.
+              </p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <button type="button" class="owner-btn-secondary" id="downloadDataJsBtn" style="border-color: #4ade80; color: #4ade80; font-weight: 700;">
+                  📥 Download Updated data.js (Instant npx serve Sync)
+                </button>
+                <button type="button" class="owner-btn-secondary" id="copyDataJsBtn" style="border-color: #cbd5e1; color: #cbd5e1; font-weight: 700;">
+                  📋 Copy data.js Code
+                </button>
+                <button type="button" class="owner-btn-secondary" id="syncLocalToServerBtn" style="border-color: #38bdf8; color: #38bdf8; font-weight: 700;">
+                  🔄 Upload Products to start-server.bat
+                </button>
+                <span id="syncLocalStatus" style="font-size: 12.5px; font-weight: 600; width: 100%; margin-top: 6px;"></span>
+              </div>
+            </div>
+
+            <div class="owner-form-actions">
+              <button type="submit" class="owner-btn-publish">
+                <span>💾 Save Settings</span>
+              </button>
+              <button type="button" class="owner-btn-secondary" id="testWhatsAppBtn">
+                <span>💬 Test WhatsApp Chat</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       EDIT PRODUCT MODAL
+       ========================================================================== -->
+  <div class="modal-overlay" id="adminEditModal" role="dialog" aria-modal="true" style="z-index: 11100;">
+    <div class="modal-content-box owner-edit-card">
+      <div class="owner-box-header">
+        <div>
+          <h3 class="owner-box-title">✏️ Edit Product Details & Price</h3>
+          <span class="owner-sub-title">Changes update immediately on the live store</span>
+        </div>
+        <button class="modal-close-btn" id="closeAdminEditBtn" aria-label="Close edit window">✕</button>
+      </div>
+
+      <form id="adminEditProductForm" class="owner-product-form">
+        <input type="hidden" id="editProdId" />
+
+        <!-- Product Title -->
+        <div class="owner-form-group">
+          <label class="owner-label" for="editProdName">Product Title *</label>
+          <input type="text" id="editProdName" class="owner-input" required />
+        </div>
+
+        <!-- Category & Brand -->
+        <div class="owner-form-row">
+          <div class="owner-form-group flex-1">
+            <label class="owner-label" for="editProdCategory">Category *</label>
+            <select id="editProdCategory" class="owner-select" required></select>
+          </div>
+          <div class="owner-form-group flex-1">
+            <label class="owner-label" for="editProdBrand">Brand Name</label>
+            <input type="text" id="editProdBrand" class="owner-input" required />
+          </div>
+        </div>
+
+        <!-- Price & Badge -->
+        <div class="owner-form-row">
+          <div class="owner-form-group flex-1">
+            <label class="owner-label" for="editProdPrice">Price in UGX *</label>
+            <input type="number" id="editProdPrice" class="owner-input" placeholder="e.g. 5000000" min="0" step="any" required />
+          </div>
+          <div class="owner-form-group flex-1">
+            <label class="owner-label" for="editProdBadge">Promotional Badge</label>
+            <select id="editProdBadge" class="owner-select">
+              <option value="Hot Deal">Hot Deal 🔥</option>
+              <option value="Popular Deal">Popular Deal ⚡</option>
+              <option value="Trending">Trending 🚀</option>
+              <option value="Best Seller">Best Seller ⭐</option>
+              <option value="Official Store">Official Store 🛡️</option>
+              <option value="Special Offer">Special Offer 🎁</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Photo -->
+        <div class="owner-form-group">
+          <label class="owner-label">Product Photo</label>
+          <div class="owner-image-input-wrap">
+            <label for="editProdFileInput" class="owner-upload-btn" id="editProdUploadLabel">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span>📁 Change Photo from Phone or Computer</span>
+            </label>
+            <input type="file" id="editProdFileInput" accept="image/*" style="display: none;" />
+
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="owner-upload-or">OR Link / URL:</span>
+              <input type="text" id="editProdImage" class="owner-input" style="flex: 1;" placeholder="Image URL or choose file above..." required />
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 14px; margin-top: 8px;">
+            <img id="editProdImgPreview" src="assets/images/logo.png" alt="Preview" style="width: 58px; height: 58px; object-fit: contain; border-radius: 8px; border: 1.5px solid #334155; background: #070c18;" />
+            <span style="font-size: 12px; color: #94a3b8;">Photo preview (updates as you change file or URL)</span>
+          </div>
+        </div>
+
+        <!-- Specs -->
+        <div class="owner-form-group">
+          <label class="owner-label" for="editProdSpecs">Key Specs Summary</label>
+          <input type="text" id="editProdSpecs" class="owner-input" />
+        </div>
+
+        <!-- Description -->
+        <div class="owner-form-group">
+          <label class="owner-label" for="editProdDesc">Detailed Description</label>
+          <textarea id="editProdDesc" class="owner-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="owner-form-actions">
+          <button type="submit" class="owner-btn-publish">
+            <span>💾 Save Changes to Store</span>
+          </button>
+          <button type="button" class="owner-btn-secondary" id="cancelAdminEditBtn">
+            <span>Cancel</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notice -->
+  <div class="admin-toast" id="adminToast">
+    <span>✓</span>
+    <span id="adminToastText">Action completed successfully</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

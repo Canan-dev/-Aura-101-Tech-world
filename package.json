@@ -1,0 +1,17 @@
+{
+  "name": "aura-101-tech-world",
+  "version": "2.0.0",
+  "description": "AURA 101 TECH WORLD E-Commerce & Inventory Management Web Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "uganda",
+    "store",
+    "electronics"
+  ],
+  "author": "AURA 101 TECH WORLD",
+  "license": "ISC"
+}

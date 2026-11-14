@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="100%" stop-color="#052e16"/>
+    </linearGradient>
+    <radialGradient id="spotlight" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </radialGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="320" height="300" rx="20" fill="url(#bgGrad)"/>
+  <rect width="320" height="300" rx="20" fill="url(#spotlight)"/>
+
+  <!-- Decorative Tech Grid Lines -->
+  <circle cx="160" cy="150" r="110" fill="none" stroke="#4ade80" stroke-opacity="0.15" stroke-dasharray="4 6"/>
+  <circle cx="160" cy="150" r="135" fill="none" stroke="#16a34a" stroke-opacity="0.1"/>
+
+  <!-- Tech Gadget Vector Art -->
+  <g filter="url(#cardShadow)">
+    
+        <rect x="95" y="65" width="130" height="190" rx="18" fill="#1e293b" stroke="#16a34a" stroke-width="4"/>
+        <!-- led display -->
+        <rect x="120" y="85" width="80" height="35" rx="6" fill="#000000" stroke="#4ade80" stroke-width="1.5"/>
+        <text x="160" y="108" fill="#4ade80" font-family="monospace" font-size="16" font-weight="bold" text-anchor="middle">100%</text>
+        <!-- lightning bolt -->
+        <path d="M165 140 L145 170 L160 170 L155 200 L180 165 L165 165 Z" fill="#eab308"/>
+        <!-- port indicator -->
+        <rect x="135" y="225" width="50" height="10" rx="3" fill="#64748b"/>
+      
+  </g>
+
+  <!-- Title Pill at Bottom -->
+  <rect x="25" y="246" width="270" height="38" rx="10" fill="#0f172a" fill-opacity="0.85" stroke="#334155" stroke-width="1"/>
+  <text x="160" y="264" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Oraimo 30,000mAh PowerBank</text>
+  <text x="160" y="278" fill="#4ade80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="600" text-anchor="middle">22.5W Fast Charge 3-Outputs</text>
+</svg>
